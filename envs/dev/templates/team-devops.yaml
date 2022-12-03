@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: team-burnham
+  name: team-devops
   namespace: argocd
   labels:
     {{- toYaml .Values.labels | nindent 4 }}
@@ -10,12 +10,12 @@ metadata:
 spec:
   project: default
   destination:
-    namespace: team-burnham
+    namespace: team-devops
     server: {{ .Values.spec.destination.server }}
   source:
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
-    path: teams/team-burnham/dev
+    path: teams/team-devops/dev
     helm:
       values: |
         {{- toYaml .Values | nindent 8 }}
