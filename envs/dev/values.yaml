@@ -14,4 +14,4 @@ spec:
   karpenterInstanceProfile:
   ingress:
     type: 'alb' # nginx | alb
-    host: # empty or your domain like dev.example.com
+    host: dev.janus-ai.com # empty or your domain like dev.example.com
