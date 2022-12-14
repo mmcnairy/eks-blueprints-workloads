@@ -1,6 +1,6 @@
 labels:
   env: dev
-  team: burnham
+  team: devops
 spec:
   env:
   ingress:

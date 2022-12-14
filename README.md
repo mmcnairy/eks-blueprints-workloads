@@ -80,7 +80,7 @@ envs
 ├── dev
 │   ├── Chart.yaml
 │   ├── templates
-│   │   ├── team-burnham.yaml
+│   │   ├── team-devops.yaml
 │   │   ├── team-carmen.yaml
 │   │   ├── team-riker.yaml
 │   └── values.yaml
@@ -98,7 +98,7 @@ Each `team` subdirectory in turn has environment subdirectories. The configurati
 
 ```
 teams
-├── team-burnham
+├── team-devops
 │   ├── dev
 │   │   ├── deployment.yaml
 │   │   └── service.yaml

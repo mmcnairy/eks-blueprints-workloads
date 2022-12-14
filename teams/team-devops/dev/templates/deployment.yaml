@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: nginx
   labels:
-    app: burnham  
+    app: devops  
     {{- toYaml .Values.labels | nindent 4 }}
 spec:
   replicas: 1

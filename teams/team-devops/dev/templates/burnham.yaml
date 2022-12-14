@@ -1,10 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: burnham-ingress
-  namespace: team-burnham
+  name: devops-ingress
+  namespace: team-devops
   labels:
-    app: burnham
+    app: devops
     {{- toYaml .Values.labels | nindent 4 }}
   annotations:
 {{ if eq .Values.spec.ingress.type "nginx" }}
@@ -13,14 +13,14 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: 'ip'
   {{ if .Values.spec.ingress.host }} # we can't use grouping without custom domain
-    alb.ingress.kubernetes.io/group.name: burnham
+    alb.ingress.kubernetes.io/group.name: devops
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80,"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
   {{ else }}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
   {{ end }}
     alb.ingress.kubernetes.io/backend-protocol: 'HTTP'
-    alb.ingress.kubernetes.io/tags: Environment={{ .Values.labels.env }},Team=Burnham
+    alb.ingress.kubernetes.io/tags: Environment={{ .Values.labels.env }},Team=Devops
 {{ end }}
   {{ if .Values.spec.ingress.host }}
     external-dns.alpha.kubernetes.io/set-identifier: {{ .Values.spec.clusterName }}
@@ -35,7 +35,7 @@ spec:
 {{ end }}
   rules:
 {{ if .Values.spec.ingress.host }}
-  - host: burnham.{{ .Values.spec.ingress.host }}
+  - host: devops.{{ .Values.spec.ingress.host }}
 {{ else }}
   - host:
 {{ end }}
@@ -45,44 +45,44 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: burnham
+            name: devops
             port:
               number: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: burnham
+  name: devops
   labels:
-    app: burnham-ingress-{{ .Values.spec.env }}  
+    app: devops-ingress-{{ .Values.spec.env }}  
 spec:
   ports:
   - port: 80
     targetPort: 80
   selector:
-    app: burnham
+    app: devops
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: burnham
+  name: devops
   labels:
-    app: burnham
+    app: devops
     {{- toYaml .Values.labels | nindent 4 }}
 spec:
   replicas: 3
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: burnham
+      app: devops
   template:
     metadata:
       labels:
-        app: burnham
+        app: devops
         seb: test
     spec:
       containers:
-        - name: burnham
+        - name: devops
           image: public.ecr.aws/seb-demo/eks-example-go:6d1d832508017919344c62c5eaece159fccffa79
           imagePullPolicy: Always
           env:
@@ -99,10 +99,10 @@ spec:
               memory: 50Mi
       {{ if .Values.spec.karpenterInstanceProfile }}
       nodeSelector:
-        team: burnham
+        team: devops
         type: karpenter
       tolerations:
-        - key: 'burnham'
+        - key: 'devops'
           operator: 'Exists'
           effect: 'NoSchedule'
       {{ end }}

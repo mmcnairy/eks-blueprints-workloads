@@ -26,7 +26,7 @@ spec:
   #   karpenter.sh/discovery: my-cluster
   tags:
     karpenter.sh/cluster_name: {{.Values.spec.clusterName}}
-    karpenter.sh/provisioner: burnham
+    karpenter.sh/provisioner: devops
   metadataOptions:
     httpEndpoint: enabled
     httpProtocolIPv6: disabled
@@ -60,7 +60,7 @@ spec:
 apiVersion: karpenter.sh/v1alpha5
 kind: Provisioner
 metadata:
-  name: burnham
+  name: devops
   labels:
     {{- toYaml .Values.labels | nindent 4 }}     
 spec:
@@ -87,11 +87,11 @@ spec:
     resources:
       cpu: '200'
   labels:
-    billing-team: burnham
-    team: burnham
+    billing-team: devops
+    team: devops
     type: karpenter
   taints:
-    - key: burnham
+    - key: devops
       value: 'true'
       effect: NoSchedule
 ---
