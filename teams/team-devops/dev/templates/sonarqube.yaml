@@ -9,7 +9,7 @@ metadata:
 spec: 
   destination: 
     namespace: cicd
-    server: "https://kubernetes.default.svc"
+    server: "dev-eks-cicd-stack"
   project: default
   source: 
     chart: sonarqube-lts
