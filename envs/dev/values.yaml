@@ -7,7 +7,7 @@ spec:
     repoURL: https://github.com/mmcnairy/eks-blueprints-workloads
     targetRevision: main
 
-  # Thoses default values can be surcharged by Infrastructure as Code
+  # Those default values can be surcharged by Infrastructure as Code
   env: dev
   clusterName: eks-blueprint-cluster # the name of EKS cluster
   blueprint: 'cdk' # cdk | terraform
