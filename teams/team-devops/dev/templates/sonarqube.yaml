@@ -1,41 +1,41 @@
---- 
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata: 
-  finalizers: 
-    - resources-finalizer.argocd.argoproj.io
-  name: sonarqube
-  namespace: argocd
-spec: 
-  destination: 
-    namespace: cicd
-    server: "https://kubernetes.default.svc"
-  project: default
-  source: 
-    chart: sonarqube-lts
-    repoURL: "https://sonarsource.github.io/helm-chart-sonarqube"
-    targetRevision: "1.0.31+406"
-    helm:
-      parameters:
-      - name: service.type
-        value: LoadBalancer
-      values: |
-        ingress:
-          enabled: true
-          hosts:
-            - name: sonarqube.dev.janus-ai.com
-              path: /*
-              serviceName: sonarqube-sonarqube-lts
-              servicePort: 9000
-          annotations:
-            kubernetes.io/ingress.class: alb
-            alb.ingress.kubernetes.io/target-type: instance
-            alb.ingress.kubernetes.io/scheme: internet-facing
-            alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:936453233046:certificate/3d9b83be-9cfc-47cf-8662-e899aee4cd65
-            alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-            alb.ingress.kubernetes.io/ssl-redirect: '443'
-            alb.ingress.kubernetes.io/group.name: devops
-  syncPolicy: 
-    automated: 
-      prune: true
-      selfHeal: true
+# --- 
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata: 
+#   finalizers: 
+#     - resources-finalizer.argocd.argoproj.io
+#   name: sonarqube
+#   namespace: argocd
+# spec: 
+#   destination: 
+#     namespace: cicd
+#     server: "https://kubernetes.default.svc"
+#   project: default
+#   source: 
+#     chart: sonarqube-lts
+#     repoURL: "https://sonarsource.github.io/helm-chart-sonarqube"
+#     targetRevision: "1.0.31+406"
+#     helm:
+#       parameters:
+#       - name: service.type
+#         value: LoadBalancer
+#       values: |
+#         ingress:
+#           enabled: true
+#           hosts:
+#             - name: sonarqube.dev.janus-ai.com
+#               path: /*
+#               serviceName: sonarqube-sonarqube-lts
+#               servicePort: 9000
+#           annotations:
+#             kubernetes.io/ingress.class: alb
+#             alb.ingress.kubernetes.io/target-type: instance
+#             alb.ingress.kubernetes.io/scheme: internet-facing
+#             alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:936453233046:certificate/3d9b83be-9cfc-47cf-8662-e899aee4cd65
+#             alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+#             alb.ingress.kubernetes.io/ssl-redirect: '443'
+#             alb.ingress.kubernetes.io/group.name: devops
+#   syncPolicy: 
+#     automated: 
+#       prune: true
+#       selfHeal: true
